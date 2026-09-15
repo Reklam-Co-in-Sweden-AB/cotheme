@@ -61,4 +61,10 @@ Tänk på:
 
 ## Licens
 
-GNU General Public License v2 eller senare.
+Copyright © 2026 Reklam & Co. Licensierat under GNU General Public License v2 eller senare, se [LICENSE](LICENSE).
+
+Det medföljande biblioteket Plugin Update Checker är skrivet av Jānis Elsts och har MIT-licens.
+
+---
+
+CoTheme utvecklas och underhålls av [Reklam & Co](https://reklamco.se).
