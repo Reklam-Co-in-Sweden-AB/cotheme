@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+
+# Byggda zippar publiceras som GitHub Releases, inte i repot
+*.zip
+
+# Lokala Claude Code-inställningar
+.claude/settings.local.json
+
+# Editorer
+.vscode/
+.idea/

@@ -1,0 +1,47 @@
+# Norsk bokmål-översättning av CoThemes frontend-strängar.
+# Temats källsträngar är svenska. Bara det som syns för besökare översätts —
+# Customizer- och adminsträngar läses av Reklamco och lämnas på svenska.
+msgid ""
+msgstr ""
+"Project-Id-Version: CoTheme 1.2.1\n"
+"Language: nb_NO\n"
+"PO-Revision-Date: 2026-08-25 13:30+0200\n"
+"Last-Translator: Reklam & Co <emelie@reklamco.se>\n"
+"Language-Team: Reklam & Co\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: cotheme\n"
+
+#: header.php
+msgid "Hoppa till innehåll"
+msgstr "Hopp til innhold"
+
+#: index.php archive.php
+msgid "Inga inlägg hittades."
+msgstr "Ingen innlegg funnet."
+
+#: single.php
+msgid "Föregående:"
+msgstr "Forrige:"
+
+#: single.php
+msgid "Nästa:"
+msgstr "Neste:"
+
+#: search.php
+msgid "Sökresultat för: %s"
+msgstr "Søkeresultater for: %s"
+
+#: search.php
+msgid "Inga resultat hittades."
+msgstr "Ingen resultater funnet."
+
+#: 404.php
+msgid "Sidan kunde inte hittas."
+msgstr "Siden ble ikke funnet."
+
+#: 404.php
+msgid "Tillbaka till startsidan"
+msgstr "Tilbake til forsiden"

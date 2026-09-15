@@ -1,0 +1,1096 @@
+/*
+Theme Name: CoTheme
+Theme URI: https://reklamco.se
+Author: Reklam & Co
+Author URI: https://reklamco.se
+Description: Ett minimalt WordPress-tema byggt för Beaver Builder. Ren grund utan bloat – bara global typografi, färgvariabler och BB-stöd.
+Version: 1.2.1
+Requires at least: 6.0
+Tested up to: 6.7
+Requires PHP: 8.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: cotheme
+*/
+
+/* ==========================================================================
+   Reset / Normalize
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--cotheme-font-body, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
+  font-size: var(--cotheme-body-size, 16px);
+  line-height: var(--cotheme-body-line-height, 1.6);
+  color: var(--cotheme-text, #333);
+  background-color: var(--cotheme-bg, #fff);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Textmarkering — använder fokusfärgen mot bakgrundsfärgen istället för
+   webbläsarens default-blå. Färgen styrs via Customizer → Färgtilldelning. */
+::selection {
+  background-color: var(--cotheme-focus, var(--cotheme-primary, #0066cc));
+  color: var(--cotheme-bg, #ffffff);
+}
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--cotheme-font-heading, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif);
+  font-weight: var(--cotheme-font-heading-weight, 700);
+  line-height: 1.2;
+  color: var(--cotheme-heading, var(--cotheme-text, #333));
+}
+
+h1 { font-size: var(--cotheme-h1-size, 44px); }
+h2 { font-size: var(--cotheme-h2-size, 36px); }
+h3 { font-size: var(--cotheme-h3-size, 28px); }
+h4 { font-size: var(--cotheme-h4-size, 22px); }
+h5 { font-size: var(--cotheme-h5-size, 18px); }
+h6 { font-size: var(--cotheme-h6-size, 16px); }
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: var(--cotheme-primary, #0066cc);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--cotheme-primary-hover, var(--cotheme-secondary, #004999));
+}
+
+a:focus-visible {
+  color: var(--cotheme-primary-hover, var(--cotheme-secondary, #004999));
+  outline: 2px solid var(--cotheme-focus, var(--cotheme-primary, #0066cc));
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+ul, ol {
+  padding-left: 1.5em;
+  margin-bottom: 1em;
+}
+
+/* Citat — redaktionellt med hängande citattecken.
+   Accentfärgen styrs av --cotheme-quote (tilldelas i Customizer →
+   Färgtilldelning), med sekundärfärgen som fallback. Accenten sitter bara på
+   det stora citattecknet och källstrecket (dekorativt/stort → WCAG-säkert),
+   medan själva citattexten behåller en läsbar textfärg. */
+blockquote {
+  position: relative;
+  margin: 2em 0;
+  padding: 0.25em 0 0.25em 3rem;
+  border: 0; /* tar bort gammal vänsterkant och ev. Gutenberg-kant */
+  font-size: 1.25rem;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--cotheme-text, #333);
+}
+
+/* Stort hängande citattecken i accentfärgen */
+blockquote::before {
+  content: "\201C";
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 3.25rem;
+  line-height: 0.8;
+  color: var(--cotheme-quote, var(--cotheme-secondary, #ff6600));
+}
+
+/* Sista stycket utan extra luft så källraden hamnar tight */
+blockquote p:last-of-type {
+  margin-bottom: 0;
+}
+
+/* Källa/namn med accentfärgat streck */
+blockquote cite {
+  display: block;
+  margin-top: 0.85em;
+  font-size: 0.9rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--cotheme-text-light, #666);
+}
+
+blockquote cite::before {
+  content: "";
+  display: inline-block;
+  width: 1.75rem;
+  height: 2px;
+  margin-right: 0.7em;
+  vertical-align: middle;
+  background: var(--cotheme-quote, var(--cotheme-secondary, #ff6600));
+}
+
+/* ==========================================================================
+   Buttons (base)
+   ========================================================================== */
+
+.cotheme-btn,
+button,
+input[type="submit"] {
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  font-family: var(--cotheme-font-body, inherit);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
+  background-color: var(--cotheme-primary, #0066cc);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.cotheme-btn:hover,
+button:hover,
+input[type="submit"]:hover {
+  background-color: var(--cotheme-primary-hover, var(--cotheme-secondary, #004999));
+}
+
+.cotheme-btn:focus-visible,
+button:focus-visible,
+input[type="submit"]:focus-visible {
+  background-color: var(--cotheme-primary-hover, var(--cotheme-secondary, #004999));
+  outline: 2px solid var(--cotheme-focus, var(--cotheme-primary, #0066cc));
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+.cotheme-site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.cotheme-content {
+  flex: 1;
+}
+
+.cotheme-container {
+  width: 100%;
+  max-width: var(--cotheme-container-width, 1200px);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ==========================================================================
+   WordPress Core
+   ========================================================================== */
+
+.alignwide {
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.alignfull {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.aligncenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wp-caption {
+  max-width: 100%;
+}
+
+.wp-caption-text {
+  font-size: 0.875rem;
+  color: var(--cotheme-text-light, #666);
+  margin-top: 0.5em;
+}
+
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}
+
+/* ==========================================================================
+   Forms (base)
+   ========================================================================== */
+
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+input[type="password"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.625em 0.875em;
+  border: 1px solid var(--cotheme-border, #ddd);
+  border-radius: 4px;
+  background: #fff;
+  font-size: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--cotheme-focus, var(--cotheme-primary, #0066cc));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--cotheme-focus, var(--cotheme-primary, #0066cc)) 30%, transparent);
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--cotheme-focus, var(--cotheme-primary, #0066cc));
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   Utility classes
+   ========================================================================== */
+
+.cotheme-text-center { text-align: center; }
+.cotheme-text-right { text-align: right; }
+.cotheme-mt-1 { margin-top: 1rem; }
+.cotheme-mt-2 { margin-top: 2rem; }
+.cotheme-mb-1 { margin-bottom: 1rem; }
+.cotheme-mb-2 { margin-bottom: 2rem; }
+
+/* ==========================================================================
+   Default header & footer
+   ========================================================================== */
+
+.cotheme-header {
+  border-bottom: 1px solid var(--cotheme-border, #ddd);
+}
+
+.cotheme-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Fallback-footerns layout — gäller INTE BB Themer-wrappern,
+   där BB själv styr padding/border via sina rows. */
+.cotheme-footer:not(.cotheme-footer--themer) {
+  padding: 2rem 0;
+  border-top: 1px solid var(--cotheme-border, #ddd);
+}
+
+.cotheme-footer-inner {
+  text-align: center;
+}
+
+.cotheme-footer-widgets {
+  margin-bottom: 1.5rem;
+}
+
+.cotheme-footer-copy {
+  margin-top: 1rem;
+  color: var(--cotheme-text-light, #666);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   Skip-to-content (WCAG 2.4.1)
+   ========================================================================== */
+
+.cotheme-skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 100000;
+  padding: 0.75em 1.5em;
+  background: var(--cotheme-primary, #0066cc);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0 0 4px 4px;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.cotheme-skip-link:focus {
+  top: 0;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Reduced motion (WCAG 2.3.3)
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   WooCommerce – Grundstilar
+   ========================================================================== */
+
+/* Meddelanden */
+.woocommerce-message,
+.woocommerce-info,
+.woocommerce-error {
+  padding: 1em 1.5em;
+  margin-bottom: 1.5em;
+  border-radius: 4px;
+  font-size: 0.9375rem;
+  list-style: none;
+}
+
+.woocommerce-message {
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+
+.woocommerce-info {
+  background-color: #d1ecf1;
+  border: 1px solid #bee5eb;
+  color: #0c5460;
+}
+
+.woocommerce-error {
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+
+.woocommerce-message a,
+.woocommerce-info a,
+.woocommerce-error a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* Produktgrid */
+.woocommerce ul.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem;
+}
+
+.woocommerce ul.products li.product {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.woocommerce ul.products li.product a img {
+  margin-bottom: 0.75rem;
+  border-radius: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.woocommerce ul.products li.product a img:hover {
+  opacity: 0.85;
+}
+
+.woocommerce ul.products li.product .woocommerce-loop-product__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--cotheme-heading, #222);
+  margin-bottom: 0.25rem;
+}
+
+.woocommerce ul.products li.product .price {
+  font-size: 0.9375rem;
+  color: var(--cotheme-text, #333);
+  margin-bottom: 0.75rem;
+}
+
+.woocommerce ul.products li.product .price del {
+  color: var(--cotheme-text-light, #666);
+  margin-right: 0.5em;
+}
+
+.woocommerce ul.products li.product .price ins {
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.woocommerce ul.products li.product .button {
+  margin-top: auto;
+  align-self: center;
+}
+
+/* Rea-märke */
+.woocommerce span.onsale {
+  display: inline-block;
+  padding: 0.25em 0.75em;
+  background-color: var(--cotheme-secondary, #ff6600);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 4px;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 1;
+}
+
+/* Stjärnbetyg */
+.woocommerce .star-rating {
+  overflow: hidden;
+  position: relative;
+  height: 1em;
+  line-height: 1;
+  font-size: 0.875rem;
+  width: 5.4em;
+  font-family: 'star';
+  margin: 0 auto 0.5rem;
+}
+
+.woocommerce .star-rating::before {
+  content: '\73\73\73\73\73';
+  color: var(--cotheme-border, #ddd);
+  float: left;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+
+.woocommerce .star-rating span::before {
+  content: '\53\53\53\53\53';
+  color: #f5a623;
+  top: 0;
+  position: absolute;
+  left: 0;
+}
+
+/* Resultaträkning och sortering */
+.woocommerce .woocommerce-result-count,
+.woocommerce .woocommerce-ordering {
+  margin-bottom: 1.5rem;
+}
+
+.woocommerce .woocommerce-result-count {
+  float: left;
+  font-size: 0.875rem;
+  color: var(--cotheme-text-light, #666);
+}
+
+.woocommerce .woocommerce-ordering {
+  float: right;
+}
+
+.woocommerce .woocommerce-ordering select {
+  width: auto;
+  padding: 0.4em 0.75em;
+  font-size: 0.875rem;
+}
+
+/* Paginering */
+.woocommerce nav.woocommerce-pagination {
+  text-align: center;
+  margin: 2rem 0;
+  clear: both;
+}
+
+.woocommerce nav.woocommerce-pagination ul {
+  display: inline-flex;
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.woocommerce nav.woocommerce-pagination ul li a,
+.woocommerce nav.woocommerce-pagination ul li span {
+  display: inline-block;
+  padding: 0.5em 0.875em;
+  border: 1px solid var(--cotheme-border, #ddd);
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: var(--cotheme-text, #333);
+  text-decoration: none;
+}
+
+.woocommerce nav.woocommerce-pagination ul li a:hover {
+  background-color: var(--cotheme-primary, #0066cc);
+  border-color: var(--cotheme-primary, #0066cc);
+  color: #fff;
+}
+
+.woocommerce nav.woocommerce-pagination ul li span.current {
+  background-color: var(--cotheme-primary, #0066cc);
+  border-color: var(--cotheme-primary, #0066cc);
+  color: #fff;
+}
+
+/* ==========================================================================
+   WooCommerce – Enskild produkt
+   ========================================================================== */
+
+.woocommerce div.product {
+  position: relative;
+}
+
+.woocommerce div.product div.images {
+  float: left;
+  width: 48%;
+  margin-bottom: 2rem;
+}
+
+.woocommerce div.product div.summary {
+  float: right;
+  width: 48%;
+  margin-bottom: 2rem;
+}
+
+.woocommerce div.product div.images img {
+  border-radius: 4px;
+}
+
+.woocommerce div.product .product_title {
+  margin-bottom: 0.5rem;
+}
+
+.woocommerce div.product p.price {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--cotheme-heading, #222);
+}
+
+.woocommerce div.product .woocommerce-product-details__short-description {
+  margin-bottom: 1.5rem;
+  color: var(--cotheme-text, #333);
+}
+
+.woocommerce div.product form.cart {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.woocommerce div.product form.cart .quantity input {
+  width: 4rem;
+  text-align: center;
+  padding: 0.5em;
+}
+
+.woocommerce div.product .woocommerce-tabs {
+  clear: both;
+  margin-top: 2rem;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid var(--cotheme-border, #ddd);
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li {
+  margin-bottom: -2px;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li a {
+  display: block;
+  padding: 0.75em 1.25em;
+  border-bottom: 2px solid transparent;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--cotheme-text-light, #666);
+  text-decoration: none;
+}
+
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active a {
+  border-bottom-color: var(--cotheme-primary, #0066cc);
+  color: var(--cotheme-primary, #0066cc);
+}
+
+.woocommerce div.product .woocommerce-tabs .panel {
+  margin-bottom: 2rem;
+}
+
+/* Responsiv enskild produkt */
+@media (max-width: 768px) {
+  .woocommerce div.product div.images,
+  .woocommerce div.product div.summary {
+    float: none;
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   WooCommerce – Varukorg
+   ========================================================================== */
+
+.woocommerce table.shop_table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+}
+
+.woocommerce table.shop_table th,
+.woocommerce table.shop_table td {
+  padding: 0.75em 1em;
+  border-bottom: 1px solid var(--cotheme-border, #ddd);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.woocommerce table.shop_table th {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--cotheme-text-light, #666);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.woocommerce table.shop_table img {
+  width: 64px;
+  height: auto;
+  border-radius: 4px;
+}
+
+.woocommerce table.shop_table .product-remove a {
+  color: var(--cotheme-text-light, #666);
+  font-size: 1.25rem;
+  text-decoration: none;
+}
+
+.woocommerce table.shop_table .product-remove a:hover {
+  color: #c00;
+}
+
+.woocommerce .cart-collaterals {
+  margin-top: 2rem;
+}
+
+.woocommerce .cart_totals {
+  float: right;
+  width: 48%;
+}
+
+.woocommerce .cart_totals h2 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .woocommerce .cart_totals {
+    float: none;
+    width: 100%;
+  }
+
+  .woocommerce table.shop_table,
+  .woocommerce table.shop_table thead,
+  .woocommerce table.shop_table tbody,
+  .woocommerce table.shop_table th,
+  .woocommerce table.shop_table td,
+  .woocommerce table.shop_table tr {
+    display: block;
+  }
+
+  .woocommerce table.shop_table thead {
+    display: none;
+  }
+
+  .woocommerce table.shop_table td {
+    text-align: right;
+    padding: 0.5em 1em;
+    border-bottom: none;
+  }
+
+  .woocommerce table.shop_table td::before {
+    content: attr(data-title) ": ";
+    float: left;
+    font-weight: 600;
+  }
+
+  .woocommerce table.shop_table tr {
+    border-bottom: 1px solid var(--cotheme-border, #ddd);
+    padding: 0.5em 0;
+  }
+}
+
+/* ==========================================================================
+   WooCommerce – Kassa
+   ========================================================================== */
+
+.woocommerce form.checkout {
+  margin-top: 1rem;
+}
+
+.woocommerce form .form-row {
+  margin-bottom: 1rem;
+}
+
+.woocommerce form .form-row label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.woocommerce form .form-row .required {
+  color: #c00;
+}
+
+.woocommerce form .form-row input.input-text,
+.woocommerce form .form-row textarea {
+  width: 100%;
+}
+
+.woocommerce form .form-row.woocommerce-invalid input.input-text {
+  border-color: #c00;
+}
+
+.woocommerce form .form-row.woocommerce-validated input.input-text {
+  border-color: #28a745;
+}
+
+.woocommerce #payment {
+  background: #f8f8f8;
+  border-radius: 4px;
+  padding: 1.5em;
+  margin-top: 1.5rem;
+}
+
+.woocommerce #payment ul.payment_methods {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1em;
+}
+
+.woocommerce #payment ul.payment_methods li {
+  padding: 0.75em 0;
+  border-bottom: 1px solid var(--cotheme-border, #ddd);
+}
+
+.woocommerce #payment ul.payment_methods li:last-child {
+  border-bottom: none;
+}
+
+.woocommerce #payment .place-order {
+  margin-top: 1em;
+}
+
+.woocommerce #payment #place_order {
+  width: 100%;
+  font-size: 1.125rem;
+  padding: 1em;
+}
+
+/* ==========================================================================
+   WooCommerce – Knappar
+   ========================================================================== */
+
+.woocommerce a.button,
+.woocommerce button.button,
+.woocommerce input.button,
+.woocommerce #respond input#submit {
+  display: inline-block;
+  padding: 0.75em 1.5em;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: var(--cotheme-primary, #0066cc);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.woocommerce a.button:hover,
+.woocommerce button.button:hover,
+.woocommerce input.button:hover,
+.woocommerce #respond input#submit:hover {
+  background-color: var(--cotheme-primary-hover, var(--cotheme-secondary, #004999));
+  color: #fff;
+}
+
+.woocommerce a.button.alt,
+.woocommerce button.button.alt,
+.woocommerce input.button.alt {
+  background-color: var(--cotheme-primary, #0066cc);
+  color: #fff;
+}
+
+.woocommerce a.button.alt:hover,
+.woocommerce button.button.alt:hover,
+.woocommerce input.button.alt:hover {
+  background-color: var(--cotheme-primary-hover, var(--cotheme-secondary, #004999));
+}
+
+/* ==========================================================================
+   WooCommerce – Mitt konto
+   ========================================================================== */
+
+.woocommerce-account .woocommerce-MyAccount-navigation {
+  float: left;
+  width: 25%;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul li {
+  margin-bottom: 0;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul li a {
+  display: block;
+  padding: 0.75em 1em;
+  border-left: 3px solid transparent;
+  font-size: 0.9375rem;
+  color: var(--cotheme-text, #333);
+  text-decoration: none;
+}
+
+.woocommerce-account .woocommerce-MyAccount-navigation ul li.is-active a {
+  border-left-color: var(--cotheme-primary, #0066cc);
+  color: var(--cotheme-primary, #0066cc);
+  font-weight: 600;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content {
+  float: right;
+  width: 72%;
+}
+
+@media (max-width: 768px) {
+  .woocommerce-account .woocommerce-MyAccount-navigation,
+  .woocommerce-account .woocommerce-MyAccount-content {
+    float: none;
+    width: 100%;
+  }
+
+  .woocommerce-account .woocommerce-MyAccount-navigation {
+    margin-bottom: 1.5rem;
+  }
+
+  .woocommerce-account .woocommerce-MyAccount-navigation ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .woocommerce-account .woocommerce-MyAccount-navigation ul li a {
+    border-left: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.5em 0.75em;
+    font-size: 0.8125rem;
+  }
+
+  .woocommerce-account .woocommerce-MyAccount-navigation ul li.is-active a {
+    border-left: none;
+    border-bottom-color: var(--cotheme-primary, #0066cc);
+  }
+}
+
+/* ==========================================================================
+   WooCommerce – Widgetar
+   ========================================================================== */
+
+.woocommerce .widget_price_filter .price_slider_wrapper {
+  margin-bottom: 1rem;
+}
+
+.woocommerce .widget_price_filter .ui-slider {
+  position: relative;
+  height: 4px;
+  background: var(--cotheme-border, #ddd);
+  border-radius: 2px;
+  margin: 1em 0;
+}
+
+.woocommerce .widget_price_filter .ui-slider .ui-slider-range {
+  background: var(--cotheme-primary, #0066cc);
+  height: 100%;
+  position: absolute;
+  border-radius: 2px;
+}
+
+.woocommerce .widget_price_filter .ui-slider .ui-slider-handle {
+  width: 16px;
+  height: 16px;
+  background: var(--cotheme-primary, #0066cc);
+  border-radius: 50%;
+  position: absolute;
+  top: -6px;
+  cursor: pointer;
+}
+
+/* WooCommerce produktgalleri */
+.woocommerce div.product div.images .flex-control-thumbs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+.woocommerce div.product div.images .flex-control-thumbs li {
+  flex: 0 0 auto;
+  width: 60px;
+}
+
+.woocommerce div.product div.images .flex-control-thumbs li img {
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.woocommerce div.product div.images .flex-control-thumbs li img.flex-active,
+.woocommerce div.product div.images .flex-control-thumbs li img:hover {
+  opacity: 1;
+}
+
+/* Clearfix för WooCommerce-layout */
+.woocommerce::after,
+.woocommerce div.product::after,
+.woocommerce .cart-collaterals::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* ==========================================================================
+   Footer reveal — opt-in via body.has-footer-reveal
+   Footern ligger fixed bakom sidan och avtäcks när man scrollar nedåt.
+   --cotheme-footer-h sätts av JS (cotheme-footer-reveal.js) så höjden
+   alltid matchar footerns faktiska höjd vid olika breakpoints.
+   ========================================================================== */
+
+body.has-footer-reveal {
+  --cotheme-footer-h: 480px; /* fallback innan JS hinner mäta */
+}
+
+/* Footern: fixed längst ned, ligger bakom sidan */
+body.has-footer-reveal .cotheme-footer--themer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 0;
+}
+
+/* Header och innehåll lyfts ovanpå footern.
+   OBS: <main> måste ha en solid bakgrund — annars syns footern igenom
+   medan man scrollar. Sätt --cotheme-bg eller body-bg som vanligt. */
+body.has-footer-reveal .cotheme-header {
+  position: relative;
+  z-index: 2;
+  background-color: var(--cotheme-bg, #fff);
+}
+
+/* Fyra fall täcks:
+   1. Temats standardmallar (single.php, page.php …) → <main id="main-content">.
+   2. Beaver Themer Singular-layouter kör förbi single.php och renderar
+      innehållet direkt i <body> som <div class="fl-builder-content"> UTAN
+      <main>. Selectorn nedan träffar det topplagret (headern har
+      data-type="header", footern ligger inuti <footer>), och > säkrar att
+      bara content-lagret tas — inte nästlade BB-rader.
+   3. Beaver Themer Archive-layouter (sökresultat, arkiv) — samma DOM-struktur
+      som singular men body får klassen fl-theme-builder-archive.
+   4. Beaver Themer 404-layouter — samma DOM-struktur, body får klassen
+      fl-theme-builder-404. */
+body.has-footer-reveal #main-content.cotheme-content,
+body.has-footer-reveal.fl-theme-builder-singular > .fl-builder-content:not([data-type]),
+body.has-footer-reveal.fl-theme-builder-archive > .fl-builder-content:not([data-type]),
+body.has-footer-reveal.fl-theme-builder-404 > .fl-builder-content:not([data-type]) {
+  position: relative;
+  z-index: 1;
+  background-color: var(--cotheme-bg, #fff);
+  margin-bottom: var(--cotheme-footer-h, 480px);
+}
+
+/* WordPress admin-bar respekteras automatiskt — fixed bottom påverkas ej */
+
+/* Print: stäng av reveal så footern hamnar i normalt flöde */
+@media print {
+  body.has-footer-reveal .cotheme-footer--themer {
+    position: static;
+  }
+  body.has-footer-reveal #main-content.cotheme-content,
+  body.has-footer-reveal.fl-theme-builder-singular > .fl-builder-content:not([data-type]),
+  body.has-footer-reveal.fl-theme-builder-archive > .fl-builder-content:not([data-type]),
+  body.has-footer-reveal.fl-theme-builder-404 > .fl-builder-content:not([data-type]) {
+    margin-bottom: 0;
+  }
+}
+
+/* Reduced motion: ingen påverkan, effekten är inte animerad */
