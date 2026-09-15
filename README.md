@@ -29,9 +29,25 @@ Ett minimalt WordPress-tema från Reklam & Co, byggt för Beaver Builder. Temat 
 
 1. Ladda ner `cotheme.zip` från den senaste versionen under [Releases](../../releases).
 2. Gå till **Utseende → Teman → Lägg till nytt → Ladda upp tema** i WordPress och ladda upp zip-filen.
-3. Installera `cotheme-child.zip` på samma sätt och aktivera child-temat.
+3. Gå till **Utseende → Skapa kundtema** och skapa ett child-tema för kunden (se nedan).
 
 > **Obs!** Använd inte GitHubs knapp *Code → Download ZIP*. Den ger mappnamnet `cotheme-main`, och då hittar child-temat inte sitt huvudtema (`Template: cotheme`).
+
+## Kundtema
+
+Varje kund får ett eget child-tema, till exempel `smf/` med temanamnet "SMF". Kundens egen CSS och egna funktioner läggs där, medan CoTheme uppdateras centralt utan att skriva över dem.
+
+Från version 1.4.0 skapas kundtemat under **Utseende → Skapa kundtema**:
+
+- **Kundens namn** blir temats namn och **mappnamnet** föreslås automatiskt.
+- **Loggan** läggs på vald bakgrundsfärg och blir temats bild i temalistan.
+- **Ta med inställningarna från det aktiva temat** kopierar färger, typsnitt, logga, menyplaceringar och Ytterligare CSS. En sajt som kör "CoTheme Child" kan därför byta till ett eget kundtema utan att tappa något.
+
+Tänk på:
+
+- **Döp aldrig om mappen för ett aktivt kundtema.** Customizer-inställningarna är kopplade till mappnamnet och försvinner. Skapa i stället ett nytt kundtema med *Ta med inställningarna* ikryssat.
+- Kundteman hör inte hemma i det här repot, utan i kundens eget projekt.
+- Sidan kräver att WordPress får skriva till `wp-content/themes`. På sajter med `DISALLOW_FILE_MODS` visas en varning, och då installeras `cotheme-child.zip` från Releases för hand. Ändra `Theme Name` och `Text Domain` i `style.css` och döp om mappen **innan** temat aktiveras.
 
 ## Uppdateringar
 
