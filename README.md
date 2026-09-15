@@ -33,20 +33,31 @@ Ett minimalt WordPress-tema från Reklam & Co, byggt för Beaver Builder. Temat 
 
 > **Obs!** Använd inte GitHubs knapp *Code → Download ZIP*. Den ger mappnamnet `cotheme-main`, och då hittar child-temat inte sitt huvudtema (`Template: cotheme`).
 
-### Uppdatera en befintlig sajt
+## Uppdateringar
 
-Ladda upp den nya `cotheme.zip` på samma sätt. WordPress frågar om du vill ersätta det nuvarande temat, välj **Ersätt nuvarande med uppladdat**. Child-temat och dina inställningar i Customizern påverkas inte.
+Från version 1.3.0 kollar temat själv efter nya releases här på GitHub, ungefär två gånger per dygn. När en ny version finns visas **Uppdatering finns** under *Utseende → Teman* och *Adminpanel → Uppdateringar*, och man uppdaterar med ett klick. Child-temat och inställningarna i Customizern påverkas inte.
 
-## Utveckling
+Sajter som kör 1.2.1 eller äldre saknar uppdateringskollen. De behöver uppdateras till 1.3.0 **en gång för hand**: ladda upp `cotheme.zip` och välj **Ersätt nuvarande med uppladdat**. Därefter sköts uppdateringarna automatiskt.
 
-- Följ WordPress Coding Standards och indentera PHP med tabbar.
-- Höj versionsnumret på **båda** ställena inför en ny version: `Version:` i `cotheme/style.css` och `COTHEME_VERSION` i `cotheme/functions.php`.
-- Skapa en zip där mappen heter `cotheme/` och publicera den som en ny release:
+Uppdateringskollen bygger på [Plugin Update Checker](https://github.com/YahnisElsts/plugin-update-checker) (`cotheme/inc/lib/`, MIT-licens) och ställs in i `cotheme/inc/updater.php`.
+
+## Släppa en ny version
+
+1. Höj versionsnumret på **båda** ställena: `Version:` i `cotheme/style.css` och `COTHEME_VERSION` i `cotheme/functions.php`.
+2. Committa och pusha till `main`.
+3. Bygg zippen (mappen i zippen måste heta `cotheme/`) och skapa en release med taggen `v` + versionsnumret:
 
 ```bash
 zip -r cotheme.zip cotheme -x "*.DS_Store"
-gh release create v1.2.1 cotheme.zip --title "CoTheme 1.2.1"
+gh release create v1.3.0 cotheme.zip --title "CoTheme 1.3.0" --notes "Vad som är nytt …"
 ```
+
+Tänk på:
+
+- Filen **måste** heta exakt `cotheme.zip`. Saknas den visar sajterna ingen uppdatering alls. GitHubs automatiska källkods-zip används aldrig, eftersom den har fel mappstruktur.
+- Sajterna ser bara den release som är markerad som *Latest*. Utkast och pre-releases ignoreras, så de går bra att använda för tester.
+- Det du skriver i release-anteckningarna visas som ändringslogg i WordPress.
+- En release når **alla** sajter som kör temat. Testa på en stagingsajt innan du publicerar.
 
 ## Licens
 

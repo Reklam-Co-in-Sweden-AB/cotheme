@@ -8,7 +8,7 @@
 
 defined('ABSPATH') || exit;
 
-define('COTHEME_VERSION', '1.2.1');
+define('COTHEME_VERSION', '1.3.0');
 define('COTHEME_DIR', get_template_directory());
 define('COTHEME_URI', get_template_directory_uri());
 
@@ -19,6 +19,7 @@ require_once COTHEME_DIR . '/inc/custom-fonts-admin.php';
 require_once COTHEME_DIR . '/inc/styleguide.php';
 require_once COTHEME_DIR . '/inc/performance.php';
 require_once COTHEME_DIR . '/inc/page-layout.php';
+require_once COTHEME_DIR . '/inc/updater.php';
 
 
 // ==========================================================================
