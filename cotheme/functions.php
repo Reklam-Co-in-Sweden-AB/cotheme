@@ -8,7 +8,7 @@
 
 defined('ABSPATH') || exit;
 
-define('COTHEME_VERSION', '1.4.0');
+define('COTHEME_VERSION', '1.4.1');
 define('COTHEME_DIR', get_template_directory());
 define('COTHEME_URI', get_template_directory_uri());
 
