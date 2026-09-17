@@ -17,6 +17,12 @@
 
 defined('ABSPATH') || exit;
 
+// Uppdateringskollen behövs bara i admin, cron och WP-CLI. På frontend
+// hoppar vi över hela biblioteket så att det inte laddas vid varje sidvisning.
+if (!is_admin() && !wp_doing_cron() && !(defined('WP_CLI') && WP_CLI)) {
+	return;
+}
+
 require_once COTHEME_DIR . '/inc/lib/plugin-update-checker/plugin-update-checker.php';
 
 $cotheme_update_checker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(

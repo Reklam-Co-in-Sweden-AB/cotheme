@@ -122,19 +122,17 @@ add_filter('style_loader_tag', function (string $html, string $handle): string {
 
 
 // ==========================================================================
-// Preload LCP-bild och fetchpriority på logotyp
+// Logotyp — aldrig lazy-laddad
 // ==========================================================================
+//
+// Logotypen får varken fetchpriority="high" eller preload. På BB-sidor är
+// hero-bilden nästan alltid LCP-elementet, och en högprioriterad logotyp
+// konkurrerar då om bandbredd med den. Webbläsaren hittar logotypen tidigt
+// i headern ändå.
 
 add_filter('get_custom_logo', function (string $html): string {
-	// Lägg till fetchpriority="high" på logotypen
-	if (strpos($html, 'fetchpriority') === false) {
-		$html = str_replace('<img ', '<img fetchpriority="high" ', $html);
-	}
-
 	// Ta bort loading="lazy" från logotypen (den är alltid above-the-fold)
-	$html = str_replace(' loading="lazy"', '', $html);
-
-	return $html;
+	return str_replace(' loading="lazy"', '', $html);
 });
 
 
@@ -171,43 +169,5 @@ add_filter('wp_get_attachment_image_attributes', function (array $attr, WP_Post 
 
 	return $attr;
 }, 10, 2);
-
-
-// ==========================================================================
-// Preload-hints för kritiska resurser
-// ==========================================================================
-
-add_action('wp_head', function () {
-	// Preload logotypen om den finns (vanligaste LCP-elementet)
-	$custom_logo_id = get_theme_mod('custom_logo');
-	if ($custom_logo_id) {
-		$logo_url = wp_get_attachment_image_url($custom_logo_id, 'full');
-		if ($logo_url) {
-			$ext  = pathinfo($logo_url, PATHINFO_EXTENSION);
-			$type = '';
-			switch ($ext) {
-				case 'svg':
-					$type = 'image/svg+xml';
-					break;
-				case 'webp':
-					$type = 'image/webp';
-					break;
-				case 'png':
-					$type = 'image/png';
-					break;
-				case 'jpg':
-				case 'jpeg':
-					$type = 'image/jpeg';
-					break;
-			}
-
-			echo '<link rel="preload" href="' . esc_url($logo_url) . '" as="image"';
-			if ($type) {
-				echo ' type="' . esc_attr($type) . '"';
-			}
-			echo ' fetchpriority="high">' . "\n";
-		}
-	}
-}, 2);
 
 
