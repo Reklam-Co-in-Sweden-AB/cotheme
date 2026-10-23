@@ -644,7 +644,8 @@ function cotheme_themer_content_enabled(): bool {
  */
 function cotheme_render_header(): void {
 	if (cotheme_themer_header_enabled()) {
-		FLThemeBuilderLayoutRenderer::render_header('cotheme_header');
+		// Argumentet är taggnamnet (inte hooken) – <header> ger headern rätt semantik.
+		FLThemeBuilderLayoutRenderer::render_header('header');
 	} else {
 		cotheme_render_default_header();
 	}
