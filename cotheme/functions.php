@@ -8,7 +8,7 @@
 
 defined('ABSPATH') || exit;
 
-define('COTHEME_VERSION', '1.4.1');
+define('COTHEME_VERSION', '1.4.2');
 define('COTHEME_DIR', get_template_directory());
 define('COTHEME_URI', get_template_directory_uri());
 
@@ -638,6 +638,18 @@ function cotheme_themer_content_enabled(): bool {
 	}
 	return false;
 }
+
+/**
+ * Themers innehållslayouter renderas i temats mall themer-content.php, som lägger
+ * layouten i <main id="main-content"> (Themers egen mall har ingen <main>).
+ * render_content_layout() finns från Themer 1.5 – äldre versioner behåller sin mall.
+ */
+add_filter('fl_theme_builder_template_include', function ($template) {
+	if (!method_exists('FLThemeBuilderLayoutRenderer', 'render_content_layout')) {
+		return $template;
+	}
+	return get_template_directory() . '/themer-content.php';
+});
 
 /**
  * Rendera Themer header (om den finns), annars fallback

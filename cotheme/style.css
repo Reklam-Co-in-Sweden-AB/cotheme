@@ -4,7 +4,7 @@ Theme URI: https://reklamco.se
 Author: Reklam & Co
 Author URI: https://reklamco.se
 Description: Ett minimalt WordPress-tema byggt för Beaver Builder. Ren grund utan bloat – bara global typografi, färgvariabler och BB-stöd.
-Version: 1.4.1
+Version: 1.4.2
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -1059,9 +1059,10 @@ body.has-footer-reveal .cotheme-header {
 
 /* Fyra fall täcks:
    1. Temats standardmallar (single.php, page.php …) → <main id="main-content">.
-   2. Beaver Themer Singular-layouter kör förbi single.php och renderar
-      innehållet direkt i <body> som <div class="fl-builder-content"> UTAN
-      <main>. Selectorn nedan träffar det topplagret (headern har
+   2. Beaver Themer Singular-layouter kör förbi single.php. Från Themer 1.5
+      lägger themer-content.php dem i <main id="main-content"> (fall 1); med
+      äldre Themer hamnar <div class="fl-builder-content"> direkt i <body> UTAN
+      <main>. Selectorn nedan träffar då det topplagret (headern har
       data-type="header", footern ligger inuti <footer>), och > säkrar att
       bara content-lagret tas — inte nästlade BB-rader.
    3. Beaver Themer Archive-layouter (sökresultat, arkiv) — samma DOM-struktur

@@ -3,7 +3,7 @@
 # Customizer- och adminsträngar läses av Reklamco och lämnas på svenska.
 msgid ""
 msgstr ""
-"Project-Id-Version: CoTheme 1.4.1\n"
+"Project-Id-Version: CoTheme 1.4.2\n"
 "Language: en_GB\n"
 "PO-Revision-Date: 2026-09-17 14:00+0200\n"
 "Last-Translator: Reklam & Co <emelie@reklamco.se>\n"
