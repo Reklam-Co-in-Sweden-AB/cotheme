@@ -4,7 +4,7 @@ Theme URI: https://reklamco.se
 Author: Reklam & Co
 Author URI: https://reklamco.se
 Description: Ett minimalt WordPress-tema byggt för Beaver Builder. Ren grund utan bloat – bara global typografi, färgvariabler och BB-stöd.
-Version: 1.4.2
+Version: 1.4.3
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 8.0
@@ -47,6 +47,18 @@ canvas,
 svg {
   display: block;
   max-width: 100%;
+}
+
+/*
+ * height: auto gäller inte SVG:er med height-attribut. Till exempel UABB:s
+ * radavdelare styrs av sitt height-attribut, och height: auto skrev över det
+ * så att avdelarna blev flera tusen pixlar höga.
+ */
+img,
+picture,
+video,
+canvas,
+svg:not([height]) {
   height: auto;
 }
 
