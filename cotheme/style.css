@@ -115,6 +115,15 @@ a:focus-visible {
   border-radius: 2px;
 }
 
+/* Ingen fokusram vid musklick i Beaver Builders innehåll. Beaver Builders layout-CSS ritar en
+   ram på allt som får fokus (:focus, inte :focus-visible), så länkar, knappar och klickbara
+   kort fick en ram så fort man klickade på dem. Ramen ska bara synas vid tangentbordsnavigering,
+   och där gäller reglerna med :focus-visible som förut. Selektorn är med flit tyngre än
+   Beaver Builders (0,4,0 mot 0,3,0), så att ordningen mellan filerna inte spelar någon roll. */
+:is(.fl-builder-content, .fl-page) :is(a, button, summary, input, select, textarea, [tabindex]):focus:not(:focus-visible) {
+  outline: none;
+}
+
 ul, ol {
   padding-left: 1.5em;
   margin-bottom: 1em;
